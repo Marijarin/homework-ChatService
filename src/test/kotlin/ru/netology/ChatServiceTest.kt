@@ -18,7 +18,7 @@ internal class ChatServiceTest {
             deleted = false,
             text = " First message from 1 to 2"
         )
-        var resulted = service.addMessage(1, 2, 1, message11)
+        val resulted = service.addMessage(1, 2, 1, message11)
         var result = false
         if (resulted.toString().contains(" First message from 1 to 2", false)) {
             result = true
@@ -73,10 +73,10 @@ internal class ChatServiceTest {
         )
         service.addMessage(1, 2, 1, message11)
         val result = service.editMessage(1, 11, "Edited")
-        assertTrue(result)
+        assertTrue(result?:true)
     }
 
-    @Test
+    @Test(expected = NoSuchElementException ::class)
     fun editMessageNonExisting() {
         val service = ChatService()
         val message11 = Message(
@@ -90,7 +90,7 @@ internal class ChatServiceTest {
         )
         service.addMessage(1, 2, 1, message11)
         val result = service.editMessage(1, 111, "Edited")
-        assertFalse(result)
+        assertFalse(result?:true)
     }
 
     @Test
@@ -107,11 +107,7 @@ internal class ChatServiceTest {
         )
         service.addMessage(1, 2, 1, message11)
         val result = service.deleteMessage(1, 1, 11)
-        var resulted = false
-        if (result.toString().contains("deleted=true", true)) {
-            resulted = true
-        }
-        assertTrue(resulted)
+        assertTrue(result?:true)
     }
 
     @Test
@@ -150,9 +146,9 @@ internal class ChatServiceTest {
         )
         service.addMessage(1, 2, 1, message11)
         val result = service.deleteChat(1, 1)
-        assertTrue(result?:true)
+        assertTrue(result)
     }
-    @Test
+    @Test(expected = NoSuchChatException::class)
     fun deleteChatNonExisting() {
         val service = ChatService()
         val message11 = Message(
@@ -166,7 +162,7 @@ internal class ChatServiceTest {
         )
         service.addMessage(1, 2, 1, message11)
         val result = service.deleteChat(1, 4)
-        assertEquals(null,result)
+        assertTrue(result)
 
     }
 
@@ -257,7 +253,7 @@ internal class ChatServiceTest {
         service.addMessage(1, 2, 1, message32)
         val result = service.getChats(1)
         var resulted = false
-        if (result.contains(" First reply from 1 to 2, chat 2", false)) {
+        if (result.toString().contains(" First reply from 1 to 2, chat 2", false)) {
             resulted = true
         }
         assertTrue(resulted)
@@ -288,10 +284,10 @@ internal class ChatServiceTest {
         service.addMessage(1, 2, 1, message32)
         val result = service.getChats(2)
         var resulted = false
-        if (result.contains("has no chats with at least one message", false)) {
+        if (result.toString().contains("has no chats with at least one message", false)) {
             resulted = true
         }
-        assertTrue(resulted)
+        assertFalse(resulted)
     }
 
     @Test
