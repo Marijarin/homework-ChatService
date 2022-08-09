@@ -89,13 +89,13 @@ fun main() {
     println(service.addMessage(1, 2, 2, message42))
 
     println(service.editMessage(1, 11, "Edited"))
-    println(service.editMessage(1, 111, "Edited"))
+    //println(service.editMessage(5, 11, "Edited"))
     println(service.deleteMessage(2, 2, 12))
     println(service.deleteMessage(1, 1, 21))
     println(service.deleteChat(2, 2))
     println(service.getChats(1))
     println(service.getChats(2))
-    println(service.getMessages(1, 21, 2))
+    println(service.getMessages(1, 21, 3))
     println(service.getUnreadChatsCount(1))
     println(service.getUnreadChatsCount(2))
 
