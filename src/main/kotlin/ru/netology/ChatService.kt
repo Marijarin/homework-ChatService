@@ -88,7 +88,10 @@ class ChatService {
 
 
     fun getUnreadChatsCount(owner: Int): List<Chat> {
-        return allChats.values.filter { it.ownerId == owner }.filter { !it.read && !it.deleted }
+        return allChats.values
+            .filter { it.ownerId == owner }
+            .filter { !it.read && !it.deleted }
+            .map{chat: Chat -> chat.copy(messages = chat.messages.filter{!it.deleted}.toMutableList()) }
     }
 
 }
