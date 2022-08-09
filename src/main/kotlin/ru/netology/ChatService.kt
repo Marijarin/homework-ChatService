@@ -51,7 +51,9 @@ class ChatService {
             .messages
             .indexOfFirst { it.id == messageId }
         val index2 =
-            allChats[chat]?.messages?.size?.minus(1) ?: throw NoSuchElementException("No message with $messageId")
+            allChats
+                .getOrElse(chat) { throw NoSuchChatException("No chat with id $chat")}
+                .messages.size.minus(1)
         return if ((index1 + howMany) <= index2) {
             allChats
             .getOrElse(chat) { throw NoSuchChatException("No chat with id $chat")}.messages
